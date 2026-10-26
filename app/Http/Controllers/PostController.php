@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 use function Pest\Laravel\json;
 
@@ -37,7 +38,32 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = Validator::make($request->all(), [
+            'user_id' => ['required', 'exists:users,id'],
+            'title'   => ['required', 'string', 'max:255'],
+            'body'    => ['nullable'],
+            'image_url' => ['string', 'nullable']
+        ]);
+
+        if ($validated->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Input invalid'
+            ], 400);
+        }
+
+        $post = Post::create([
+            'user_id' => $request->user_id,
+            'title'   => $request->title,
+            'body'    => $request->body,
+            'image_url' => $request->image_url
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success added new post',
+            'data'    => $post
+        ], 201);
     }
 
     /**
