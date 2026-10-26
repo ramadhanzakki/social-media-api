@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
+use function Pest\Laravel\json;
+
 class PostController extends Controller
 {
     /**
@@ -12,7 +14,14 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::with('user')
+                        ->latest()
+                        ->get();
+
+        return response()->json([
+            'status' => true,
+            'posts' => $posts
+        ]);
     }
 
     /**
@@ -36,7 +45,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        
     }
 
     /**
