@@ -16,4 +16,9 @@ Route::prefix('v1')->group(function () {
         Route::put('/{id}', [PostController::class, 'update']);
         Route::delete('/{id}', [PostController::class, 'destroy']);
     });
+
+    Route::prefix('comment')->group(function () {
+        Route::post('/', [CommentController::class, 'store']);
+        Route::delete('/{id}', [CommentController::class, 'destroy']);
+    });
 });
