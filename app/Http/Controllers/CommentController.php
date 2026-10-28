@@ -21,6 +21,6 @@ class CommentController extends Controller
             'success'  => true,
             'message'  => 'Comment has been added',
             'data'     => $data
-        ]);
+        ], 201);
     }
 }
