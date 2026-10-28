@@ -23,4 +23,15 @@ class CommentController extends Controller
             'data'     => $data
         ], 201);
     }
+
+    public function destroy(int $id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return response()->json([
+            'success'  => true,
+            'message'  => 'Comment with id: ' . $id . ' has been deleted'
+        ], 200);
+    }
 }
