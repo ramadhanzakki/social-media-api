@@ -22,4 +22,9 @@ Route::prefix('v1')->group(function () {
         Route::post('/', [CommentController::class, 'store']);
         Route::delete('/{id}', [CommentController::class, 'destroy']);
     });
+
+    Route::prefix('likes')->group(function () {
+        Route::post('/', [LikeController::class, 'store']);
+        Route::delete('/{id}', [LikeController::class, 'destroy']);
+    });
 });
